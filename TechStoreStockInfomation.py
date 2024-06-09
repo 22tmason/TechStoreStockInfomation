@@ -28,22 +28,7 @@ def loading():
 def cls():
     os.system('cls' if os.name=='nt' else 'clear')
 
-def user_menu():
-    print("Options Menu:")
-    print()
-    print("1.  Get all product information, sort by product ID")
-    print("2.  Get all product information, sort by retail price ascending")
-    print("3.  Get all product information, sort by retail price descending")
-    print("4.  Get all product information, sort by manufacturing cost ascending")
-    print("5.  Get all product information, sort by manufacturing cost descending")
-    print("6.  Get all product information, sort by weight ascending")
-    print("7.  Get all product information, sort by weight descending")
-    print("8.  Get all product information, sort by number of stock ascending")
-    print("9.  Get all product information, sort by number of stock descending")
-    print("10. Add product")
-    print("10. Delete product")
-    print("11. Edit product")
-    print()
+
 
 def get_all_stock_information():
     loading()
