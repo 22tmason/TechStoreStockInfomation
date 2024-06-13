@@ -44,6 +44,9 @@ def user_menu():
     print("8.   Get all product information, sort by weight descending")
     print("9.   Get all product information, sort by number of stock ascending")
     print("10.  Get all product information, sort by number of stock descending")
+    print("11.  Add product")
+    print("12.  Delete product")
+    print("13.  Edit product")
     print()
 
 def get_all_stock_information_by_product_id_ascending():
@@ -174,6 +177,74 @@ def get_all_stock_information_by_descending_stock():
         print(f"    Weight - {product[4]} grams")
         print(f"    Stock - {product[5]} units")
 
+def add_product():
+    loading()
+    ProductID = int(input("Enter product ID: "))
+    Name = input("Enter product name: ")
+    RetailPrice = int(input("Enter product retail price: "))
+    ManufacturingCost = int(input("Enter product manufacturing cost: "))
+    Weight = int(input("Enter product weight: "))
+    Stock = int(input("Enter product's number of stock: "))
+
+    query = "INSERT INTO TechStoreStockInformation (ProductID, Name, RetailPrice, ManufacturingCost, Weight, Stock) VALUES (?, ?, ?, ?, ?, ?)"
+    try:
+        cursor.execute(query, (ProductID, Name, RetailPrice, ManufacturingCost, Weight, Stock))
+        conn.commit()
+        print("Product added successfully!")
+    except sqlite3.Error as e:
+        print(f"Error adding product: {e}")
+
+
+def delete_product():
+    get_all_stock_information_by_product_id_ascending()
+    print("")
+    ProductID = input("Enter product ID to delete: ")
+    # Ensure ProductID is passed as a tuple (with a comma after ProductID)
+    cursor.execute("DELETE FROM TechStoreStockInformation WHERE ProductID=?", (ProductID,))
+    conn.commit()
+    print(f"Product with ProductID '{ProductID}' deleted successfully!")
+
+
+def edit_product():
+    get_all_stock_information_by_product_id_ascending()
+    choice = int(input("Enter the ID of the product you want to edit: "))
+    cursor.execute("SELECT * FROM TechStoreStockInformation")
+    TechStoreStockInformation = cursor.fetchall()
+    if choice <= len(TechStoreStockInformation) and choice > 0:
+        ProductID = TechStoreStockInformation[choice - 1][0]  
+        print("1. Name\n2. RetailPrice\n3. ManufacturingCost\n4. Weight\n5. Stock")
+        edit_choice = int(input("Enter the number of the attribute you want to edit: "))	
+        if edit_choice == 1:
+            new_name = input("Enter product's new name: ")
+            cursor.execute("UPDATE TechStoreStockInformation SET Name=? WHERE ProductID=?", (new_name, ProductID))
+            conn.commit()
+            print("Product name updated successfully!")
+
+
+        elif edit_choice == 2:
+            RetailPrice = float(input("Enter new retail price: "))
+            cursor.execute("UPDATE TechStoreStockInformation SET RetailPrice=? WHERE ProductID=?", (RetailPrice, ProductID))
+            conn.commit()
+            print("Product price updated successfully!")
+
+
+        elif edit_choice == 3:
+            ManufacturingCost = float(input("Enter new manufacturing cost: "))
+            cursor.execute("UPDATE TechStoreStockInformation SET ManufacturingCost=? WHERE ProductID=?", (ManufacturingCost, ProductID))
+            conn.commit()
+            print("Product manufacturing cost updated successfully!")
+
+
+        elif edit_choice == 4:
+            Weight = float(input("Enter new weight: "))
+            cursor.execute("UPDATE TechStoreStockInformation SET Weight=? WHERE ProductID=?", (Weight, ProductID))
+            conn.commit()
+            print("Product weight updated successfully!")
+        else:
+            print("Invalid choice")
+    else:
+        print("Invalid choice")
+
 while True:
     while True:
         cls()
@@ -203,10 +274,22 @@ while True:
             break
         if user_input == "8":
             get_all_stock_information_by_descending_weight()
+            break
         if user_input == "9":
             get_all_stock_information_by_ascending_stock()
+            break
         if user_input == "10":
             get_all_stock_information_by_descending_stock()  
+            break
+        if user_input == "11":
+            add_product()
+            break
+        if user_input == "12":
+            delete_product()
+            break
+        if user_input == "13":
+            edit_product()
+            break  
         else:
             print("Error, please type a number.")
             time.sleep(3)
