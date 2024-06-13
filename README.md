@@ -1,0 +1,5 @@
+Version 1.  Program has been improved with feedback from three different people. It now has a descending and ascending option for each query, as well as giving the user an option to choose to order the products via weight or number of stock. Along with this, I have also made some general improvements to the code.
+
+Version 2. Program has been further improved with feedback from another three people. The program now features more advanced functions such as adding and deleting products, as well as editing products. This substantially increases what the user can do with the database.
+
+Version 3. A lot has been improved since version 2. I have applied the feedback from the three people, firstly, I added an additional table to the database so the user can get more functionality out of the program. Secondly, I improved the format of the output, it now uses the pretty table module, which is very nice looking and tidy. And finally, I added a password to the program so it is more secure. I also made some general improvements to the rest of the code as well as commenting it to prove that I understand the code.
